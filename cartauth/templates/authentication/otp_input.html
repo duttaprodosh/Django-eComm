@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% extends 'authentication/cartauth_base.html' %}
+
+{% block title %} OTP Verification {% endblock title %}
+
+{% block content %}
+{% load static %}
+<link href="{% static 'assets/css/login_styles.css' %}" rel="stylesheet" />
+<style>
+    .container1 {
+  width:800px
+  border: 0 solid rgba(0,0,0,.125);
+  border-radius: 1rem;
+  border: solid white 1px;
+}
+
+    .container2 {
+  width:800px
+  min-height : 1000px
+}
+</style>
+  <div class="container1" >
+    <div class="sign-up-htm"><h3> OTP Verification</h3>
+				<form method="POST" action="{% url 'update_password_emaillink' userid token   %}">
+                     {% csrf_token %}
+
+				<div class="group text-info">
+					<label for="otp" class="label"><strong>OTP :</strong></label>
+					<input id="otp" name="otp" type="text" class="input" placeholder="OTP " required>
+
+					<input id="user_id" type="text" class="input" name="user_id" value="{{ userid }}">
+					<input id="token" type="hidden" class="input" name="token" value="{{ token }}">
+
+
+				</div> <br>
+
+				<div class="group text-info" >
+					<input type="submit" class="button text-info bg-dark" value="Verify OTP">
+				</div>
+			</form>
+
+	</div>
+  </div>
+<!-- Header-->
+{% endblock %}
+
+</html>

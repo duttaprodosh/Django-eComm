@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'authentication/cartauth_base.html' %}
+
+{% block title %} Orders {% endblock title %}
+
+{% block content %}
+{% load static %}
+
+
+  <style>
+  @charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+
+.container1 {
+  width:1100px;
+  max width : 500px;
+  height : 35px;
+  max-height:200px;
+  border: 0 solid rgba(0,0,0,.125);
+  border-radius: 1rem;
+  border: solid white 1px;
+  height:350px;
+  max-height:900px;
+  overflow-y:scroll;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1em;
+  color:#C0C0C0;
+  background-color:#CCCCFF;
+
+ }
+
+h1 {
+  font-size:3em;
+  font-weight: 300;
+  line-height:1em;
+  text-align: center;
+  color: #4DC3FA;
+}
+
+h2 {
+  font-size:1em;
+  font-weight: 300;
+  text-align: center;
+  display: block;
+  line-height:1em;
+  padding-bottom: 0.1em;
+  color: #FB667A;
+}
+
+h2 a {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #FB667A;
+  text-decoration: none;
+}
+
+.blue { color: #185875; }
+.yellow { color: #FFF842; }
+
+
+.container-fluid1 th h1 {
+	  font-weight: bold;
+	  font-size: 1em;
+  text-align: left;
+  color: #185875;
+}
+
+.container-fluid1 td {
+	  font-weight: normal;
+	  font-size: 1em;
+  -webkit-box-shadow: 0 2px 2px -2px #0E1119;
+	   -moz-box-shadow: 0 2px 2px -2px #0E1119;
+	        box-shadow: 0 2px 2px -2px #0E1119;
+}
+
+.container-fluid1 td, .container th {
+	  padding-bottom: 1%;
+	  padding-top: 1%;
+      padding-left: 0.5%;
+
+}
+/* Background-color of the odd rows */
+.container-fluid1 tr:nth-child(odd) {
+	  background-color: #323C50;
+}
+
+/* Background-color of the even rows */
+.container-fluid1 tr:nth-child(even) {
+	  background-color: #2C3446;
+}
+
+.container-fluid1 th {
+	  background-color: #1F2739;
+}
+
+.container-fluid1 td:first-child { color: #FB667A; }
+
+.container-fluid1 tr:hover {
+   background-color: #464A52;
+-webkit-box-shadow: 0 6px 6px -6px #0E1119;
+	   -moz-box-shadow: 0 6px 6px -6px #0E1119;
+	        box-shadow: 0 6px 6px -6px #0E1119;
+}
+
+.container-fluid1 td:hover {
+  background-color: #FFF842;
+  color: #403E10;
+  font-weight: bold;
+
+  box-shadow: #7F7C21 -1px 1px, #7F7C21 -2px 2px, #7F7C21 -3px 3px, #7F7C21 -4px 4px, #7F7C21 -5px 5px, #7F7C21 -6px 6px;
+  transform: translate3d(6px, -6px, 0);
+
+  transition-delay: 0s;
+	  transition-duration: 0.4s;
+	  transition-property: all;
+  transition-timing-function: line;
+}
+.container-fluid1 {
+  width:1100px;
+  height:220px;
+  max-height:2000px;
+  background: url({% static "assets/img/Leh1.jpg" %})  center;
+
+  overflow-y:scroll;
+}
+.container1 {
+  width:1100px
+
+}
+.container2 {
+  width:1100px;
+  height:35px;
+  max-height:50px;
+  overflow-y:scroll;
+
+}
+</style>
+
+<header class="container2 bg-dark py-6">
+
+                <div class="text-center text-white">
+                    <h4 class="display-7 fw-bolder">
+                     Order Details
+                </h4>
+                    <p class="lead fw-normal text-white-50 mb-0">  </p>
+                </div>
+
+</header>
+{%  if orders %}
+<div class="container-fluid1 text-black my-1 bg-light" style="border: solid black 1px">
+    <input type="hidden" id="user_type" name="user_type" value="{{ user_type }}">
+
+    {% if  user_type  == 'user' or  user_type  == 'admin' %}
+            {% for order in orders %}
+    <p> <strong><h6>&nbsp;&nbsp;<u>For Order : {{ order.order_id}}</u>&nbsp; <br>&nbsp;&nbsp;&nbsp;User : {{ order.name}}&nbsp;
+        Email : {{ order.email}}&nbsp;&nbsp;&nbsp;&nbsp;Phone : {{ order.phone}}</h6></strong></p>
+    <p> <h6><strong>&nbsp;&nbsp;Contact No. : {{ order.phone}}&nbsp;&nbsp; Address : {{ order.address1}}
+        {% if order.address2 != None %} ,&nbsp;&nbsp;{{ order.address2}} {% endif %},
+        &nbsp;&nbsp; </br>&nbsp;&nbsp;City : {{ order.city}}, &nbsp;&nbsp; State : {{ order.state}},
+        Zip Code : {{ order.zipcode}},  &nbsp;&nbsp; Country : {{ order.country}}</strong></h6></p>
+            {% endfor %}
+    {% else %}
+
+    <p> <strong><h6>&nbsp;&nbsp;&nbsp;User : Guest User&nbsp;&nbsp; &nbsp;&nbsp;
+            {% for order in orders %} <br><u>For Order : {{ order.order_id}}</u>&nbsp;
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Name = {{ order.name}} &nbsp;&nbsp;&nbsp; Email = {{ order.email}} &nbsp;&nbsp;&nbsp; Phone = {{ order.phone}}
+            <br>Address : {{ order.address1}}
+            {% if order.address2 != None %} ,&nbsp;&nbsp;{{ order.address2}} {% endif %}
+            </br>&nbsp;&nbsp;City : {{ order.city}}, &nbsp;&nbsp; State : {{ order.state}},
+        Zip Code : {{ order.zipcode}},  &nbsp;&nbsp; Country : {{ order.country}}<br>
+            &nbsp;&nbsp;&nbsp; Invoice No. = {{ order.invoice_no}}
+            {% endfor %}
+         </h6></strong></p>
+
+    {% endif %}
+
+</div>
+<div class="container-fluid1 offset-md-0" id="wrapper" style="border: solid black 2px">
+
+    <table  style="width:100%" id="keywords1" cellspacing="0" cellpadding="0">
+    <thead>
+      <tr>
+        <th>&nbsp;Invoice &nbsp;No </th>
+        <th>Order No </th>
+        <th>Shipment Address </th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+        <th>Order Shipped</th>
+        <th>&nbsp;&nbsp;Ship &nbsp;&nbsp;Date </th>
+
+      </tr>
+    </thead>
+
+        {% for order in orders %}
+        {% for orderline in order_lines %}
+        {% if orderline.order_id == order.order_id %}
+
+        {% if  user_type  == 'user' or  user_type  == 'admin' %}
+        {% with full_name=order.name shipping_address=order.address1|add:'  '|add:order.address2|add:'  City : '|add:order.city|add:'  State : '|add:order.state  email=order.email phone=order.phone invoice_no=order.invoice_no  invoice_date=order.inv_date order_no=order.order_id totals=order.ord_amount  %}
+
+        <tr>
+          <td class="lalign" width="8%"><a href="{% url 'invoice' full_name shipping_address email phone invoice_no invoice_date order_no totals %}">{{ order.invoice_no}}</a></td>
+        <td align="left" width="8%">{{ order.order_id}}</td>
+        <td width="35%">{{ order.address1}}</td>
+        <td width="25%">{{ orderline.product.product_name}}</td>
+        <td align="center" width="8%">{{ orderline.quantity}}</td>
+        <td width="8%">Rs.{{ orderline.price}}</td>
+        <td width="10%">Rs.{{ orderline.linetotal}}</td>
+          {% if order.shipped %}
+          <td align="center" width="5%"> <i class="bi bi-calendar2-check" style="font-size:30px;color:yellow"></i> </td>
+          <td width="15%">{{ order.ship_date }}</td>
+          {% else %}
+          <td align="center" width="5%"> <i class="bi bi-calendar-x" style="font-size:30px;color:yellow"></i> </td>
+          <td align="center" width="15%"> -- </td>
+          {% endif %}
+
+       </tr>
+        {% endwith %}
+        {% else %}
+        {% with full_name=order.name shipping_address=order.address1|add:'  '|add:order.address2|add:'  City : '|add:order.city|add:'  State : '|add:order.state  email=order.email phone=order.phone invoice_no=order.invoice_no  invoice_date=order.inv_date order_no=order.order_id totals=order.ord_amount %}
+
+        <tr>
+          <td class="lalign" width="8%"><a href="{% url 'invoice' full_name shipping_address email phone invoice_no invoice_date order_no totals %}">{{ order.invoice_no}}</a></td>
+        <td align="left" width="8%">{{ order.order_id}}</td>
+        <td width="35%">{{ order.address1}}</td>
+        <td width="25%">{{ orderline.product.product_name}}</td>
+        <td align="center" width="8%">{{ orderline.quantity}}</td>
+        <td width="8%">Rs.{{ orderline.price}}</td>
+        <td width="10%">Rs.{{ orderline.linetotal}}</td>
+          {% if order.shipped %}
+          <td align="center" width="5%"> <i class="bi bi-calendar2-check" style="font-size:30px;color:yellow"></i> </td>
+          <td width="15%">{{ order.ship_date }}</td>
+          {% else %}
+          <td align="center" width="5%"> <i class="bi bi-calendar-x" style="font-size:30px;color:yellow"></i> </td>
+          <td align="center" width="15%"> -- </td>
+          {% endif %}
+
+       </tr>
+        {% endwith %}
+        {% endif %}
+
+         {% endif %}
+        {% endfor %}
+        {% if order.amount != 0 %}
+       <th colspan=9 align="right"height="20px">&nbsp;Total Invoice Amount : Rs.{{ order.amount }} </th>
+         {% endif %}
+      {% endfor %}
+
+        </tbody>
+    </table>
+    <div class="d-print-none mt-3">
+        <div class="float-center">
+         <a href="javascript:window.print()" class="btn btn-success me-1"><i class="fa fa-print"> Save / Print</i></a>
+         <a href="{% url 'index'%}" class="btn btn-primary w-md">Home</a>
+        </div>
+     </div>
+
+</div>
+{% else %}
+<div class="container-fluid1 text-black my-1 bg-light" style="border: solid black 1px"><br> <h6><strong>No Order.... </strong></h6>
+<a href="{% url 'index'%}" class="btn btn-primary w-md">Home</a>
+</div>
+
+{%  endif %}
+
+{% endblock %}
+

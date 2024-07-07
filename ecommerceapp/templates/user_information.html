@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+{% extends 'authentication/cartauth_base.html' %}
+
+{% block title %} User Info {% endblock title %}
+
+{% block content %}
+{% load static %}
+<script>
+$(document).ready(function(){
+  $(".alert").on('closed.bs.alert', function(){
+    alert('Successfully Completed.');
+    $("#alert").hide();
+  });
+});
+</script>
+<style>
+  @charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+
+.container1 {
+  width:1100px;
+  max width : 500px;
+  height : 35px;
+  max-height:100px;
+  border: 0 solid rgba(0,0,0,.125);
+  border-radius: 1rem;
+  border: solid white 1px;
+
+}
+
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1em;
+  color:#C0C0C0;
+  background-color:#CCCCFF;
+ }
+
+h1 {
+  font-size:3em;
+  font-weight: 300;
+  line-height:1em;
+  text-align: center;
+  color: #4DC3FA;
+}
+
+h2 {
+  font-size:1em;
+  font-weight: 300;
+  text-align: center;
+  display: block;
+  line-height:1em;
+  padding-bottom: 0.1em;
+  color: #FB667A;
+}
+
+h2 a {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #FB667A;
+  text-decoration: none;
+}
+
+.blue { color: #185875; }
+.yellow { color: #FFF842; }
+
+
+.container-fluid1 h1 {
+	  font-weight: bold;
+	  font-size: 1em;
+  text-align: left;
+  color: #185875;
+
+}
+
+.container-fluid1 {
+  width:1100px;
+  height:425px;
+  max-height:900px;
+  background: url({% static "assets/img/Indus_Zanskar_River1.jpg" %});
+  overflow-y:scroll;
+ }
+
+
+input {
+border: 1px solid black;
+  overflow: visible;
+ }
+</style>
+
+<header class="container1 bg-dark py-6">
+
+                <div class="text-center text-white">
+                    <h4 class="display-7 fw-bolder">
+                     User Details - Login, Profile, Billing & Shipping Info.
+                </h4>
+                    <p class="lead fw-normal text-white-50 mb-0">  </p>
+                </div>
+
+</header>
+<div id="alert"  class="container" style="display:none;" >
+
+    <!--<a class="close" data-dismiss="alert" aria-label="close"><span>&times; </span></a>  -->
+</div>
+
+<div class="container-fluid1 text-black bg-light my-1" style="border: solid black 1px;">
+    {% with update_token='user' %}
+    <!--<form method="POST" action="{% url 'update_user_info' update_token %}">  -->
+    <form id="user-form" method="post">
+        {% csrf_token %}
+        <h6> <strong>&nbsp;<p>&nbsp;&nbsp; User Name :
+     <input title="User Name is not Editable." onkeydown="return false" type="text" id="username" name="username" value="{{ user.username}}" placeholder="Enter Your User name" size="10">&nbsp;&nbsp;
+      First Name :
+     <input type="text" id="first_name" name="first_name" value="{{ user.first_name}}" placeholder="Enter Your First name" size="15">
+     &nbsp;Last Name :
+     <input type="text" id="last_name" name="last_name" value="{{ user.last_name}}" placeholder="Enter Your Last name" size="15">
+     <br>&nbsp;&nbsp;&nbsp;User Email :
+     <input type="text"  id="email" name="email" value="{{ user.email}}" placeholder="Enter Your Email name" size="50"></br>
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-primary">Update User Login Info</button>
+        </p> </strong> </h6>
+    </form>
+    {% endwith  %}
+    {% with update_token='profile' %}
+  <!--  <form method="POST" action="{% url 'update_user_info' update_token %}">  -->
+    <form id="profile-form" method="post">
+        {% csrf_token %}
+       <hr> &nbsp;<h6><strong>&nbsp;
+       User Profile Phone :
+       <input type="text" id="phone" name="phone" value="{{ profile.phone}}" placeholder="Enter Your Profile Phone No." size="12"> &nbsp;&nbsp;
+       Billing Address :
+       <input type="text" id="address1" name="address1" value="{{ profile.address1}}" placeholder="Enter Your Address Line 1." size="25"> &nbsp;&nbsp;
+       &nbsp;
+       <input type="text" id="address2" name="address2" value="{{ profile.address2}}" placeholder="Enter Your Address Line 2." size="25"> &nbsp;&nbsp;
+    &nbsp;  <br>&nbsp;&nbsp;&nbsp;City :
+       <input type="text" id="city" name="city" value="{{ profile.city}}" placeholder="Enter Your City." size="20"> &nbsp;&nbsp;
+       State :
+       <input type="text" id="state" name="state" value="{{ profile.state}}" placeholder="Enter Your State." size="10"> &nbsp;&nbsp;
+         &nbsp
+        Zipcode :
+        <input type="text" id="zipcode" name="zipcode" value="{{ profile.zipcode}}" placeholder="Enter Your Zip." size="10"> &nbsp;&nbsp;
+        Country :
+        <input type="text" id="country" name="country" value="{{ profile.country}}" placeholder="Enter Your Country." size="20"> &nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-primary">Update Profile/Billing Info</button>
+        </strong></h6>
+    </form>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    {% endwith  %}
+    {% with update_token='shipping' %}
+    {% for shipment in page_obj %}
+    <!--    <form method="POST" action="{% url 'update_user_info' update_token %}">  -->
+    <form id="shipping-form" method="post">
+        {% csrf_token %}
+        <input type="hidden" id="shipping_id"  name="shipping_id" value="{{ shipment.shipping_id}}" placeholder="" >
+        <hr><h6><strong>&nbsp; Shipping Name :
+        <input type="text" id="shipping_full_name" name="shipping_full_name" value="{{ shipment.shipping_full_name}}" placeholder="Enter Shipping Full name." size="25"> &nbsp;&nbsp;
+        Shipping Email : &nbsp; &nbsp;
+        <input type="text" id="shipping_email" name="shipping_email" value="{{ shipment.shipping_email}}" placeholder="Enter Shipping Email." size="25"> &nbsp;&nbsp;
+        <br>Contact No. :
+        <input type="text" id="shipping_phone" name="shipping_phone" value="{{ shipment.shipping_phone}}" placeholder="Enter Shipping Phone." size="20"> &nbsp;&nbsp;
+            </br>
+       &nbsp;&nbsp;Shipping Address :
+        <input type="text" id="shipping_address1" name="shipping_address1" value="{{ shipment.shipping_address1}}" placeholder="Enter Shipping Address Line 1." size="45">
+        {% if shipment.shipping_address2 != None %} &nbsp;&nbsp;
+        <input type="text" id="shipping_address2" name="shipping_address2" value="{{ shipment.shipping_address2}}" placeholder="Enter Shipping Address Line 2." size="45"> &nbsp;&nbsp;
+        {% endif %}
+         </br>&nbsp;&nbsp;Shipping City :
+        <input type="text" id="shipping_city" name="shipping_city" value="{{ shipment.shipping_city}}" placeholder="Enter Shipping City." size="20"> &nbsp;&nbsp;
+       &nbsp;&nbsp;State :
+        <input type="text" id="shipping_state" name="shipping_state" value="{{ shipment.shipping_state}}" placeholder="Enter Shipping State." size="20"> &nbsp;&nbsp;
+          Zip Code :
+        <input type="text" id="shipping_zipcode" name="shipping_zipcode" value="{{ shipment.shipping_zipcode}}" placeholder="Enter Shipping ZipCode." size="10"> &nbsp;&nbsp;
+    &nbsp;  &nbsp;&nbsp;<br> Country :
+        <input type="text" id="shipping_country" name="shipping_country" value="{{ shipment.shipping_country}}" placeholder="Enter Shipping Country." size="20"> &nbsp;&nbsp;
+        </br></br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="ship_update" type="submit" class="btn btn-primary">Update Shipping Address</button>
+                            <!--<input type="button" class="btn btn-primary" onclick="resetFunction()" value="Reset form">  -->
+                            <button id="ship_delete" type="submit" class="btn btn-primary">Delete This Shipping Addrss</button>
+                            <button id="ship_create" type="submit" class="btn btn-primary">Create a New Shipping Addrss</button>
+        </strong></h6>
+
+        </form>
+        {% endfor %}
+    {% endwith %}
+
+<nav>
+<ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page=1">&laquo; first</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a>
+        </li>
+    {% endif %}
+
+    <li class="page-item active">
+        <a  class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</a>
+    </li>
+
+    {% if page_obj.has_next %}
+    <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+    </li>
+    <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+    </li>
+    {% endif %}
+</ul>
+</nav>
+
+<!--
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1" class="btn btn-primary">&nbsp;<strong>&nbsp;&nbsp;&nbsp;&laquo;  First</strong></a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-primary"><strong>Previous</strong></a>
+        {% endif %}
+
+        <span class="current text-warning"><strong>
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </strong>
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-primary"><strong>Next</strong></a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-primary"><strong>Last</strong> &raquo;</a>
+        {% endif %}
+    </span>
+<br>
+</div>
+-->
+    <br>
+</div>
+
+<div class="d-print-none mt-0">
+        <div class="float-center">
+         <a href="javascript:window.print()" class="btn btn-success me-1"><i class="fa fa-print"> Save / Print</i></a>
+         <a href="{% url 'index'%}" class="btn btn-primary w-md">Home</a>
+        </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+function resetFunction() {
+  console.log('Reset');
+  document.getElementById("shipping-form").reset();
+}
+
+  $(function() {
+    $('#user-form').on('submit', function(event) {
+      event.preventDefault();
+      $.ajax({
+        url: '{% url "update_user_info" "user" %}',
+        type: 'POST',
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function(response) {
+          if (response.success) {
+            $('#user-form').hide();
+            $('#alert').html('<br><div id="user_alert" class="alert alert-primary text-black alert-dismissible fade show" role="alert"> \
+            <strong>Your User Info Has Been Updated!! User Info - Input form being not visible now.</strong> \
+             <button type="button" class="btn-close btn-close-dark"  data-bs-dismiss="alert" aria-label="Close"> </button></div> ').show();
+
+          } else {
+              $('#alert').html('<br><div class="alert alert-primary text-black alert-dismissible fade show" role="alert">' + response.errors + '<button type="button" class="btn-close btn-close-dark"  data-bs-dismiss="alert" aria-label="Close"> </button></div>').show();
+            //$('#alert').html('<div class="alert alert-danger text-black">' + response.errors + '</div>').show();
+          }
+        }
+      });
+    });
+  });
+
+  $(function() {
+    $('#profile-form').on('submit', function(event) {
+      event.preventDefault();
+      $.ajax({
+        url: '{% url "update_user_info" "profile" %}',
+        type: 'POST',
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function(response) {
+          if (response.success) {
+            $('#profile-form').hide();
+            $('#alert').html('<br><div class="alert alert-primary text-black alert-dismissible fade show" role="alert"> \
+            <strong>Your Profile Info Has Been Updated!! Profile Info - Input form being not visible now.</strong> \
+            <button type="button" class="btn-close btn-close-dark"  data-bs-dismiss="alert" aria-label="Close"> </button></div>').show();
+          } else {
+            $('#alert').html('<br><div class="alert alert-primary text-black alert-dismissible fade show" role="alert">' + response.errors + '<button type="button" class="btn-close btn-close-dark"  data-bs-dismiss="alert" aria-label="Close"> </button></div>').show();
+          }
+        }
+      });
+    });
+  });
+
+var create_update;
+$("button").click(function () {
+        create_update = $(this).attr("id");
+        console.log($create_update);
+});
+
+  $(function() {
+    $('#shipping-form').on('submit', function(event) {
+      event.preventDefault();
+      console.log(create_update);
+      if (create_update=='ship_update') {
+      $.ajax({
+        url: '{% url "update_user_info" "ship_update" %}',
+        type: 'POST',
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function(response) {
+          if (response.success) {
+           // $('#shipping-form').hide();
+            $('#alert').html('<br><div class="alert alert-primary text-black alert-dismissible fade show" role="alert"> \
+            <strong>Shipping Info Updated!! For Another New Shipping Address, Please overwrite the Form with appropriate Inputs and press Create Button.</strong> \
+            <button type="button" class="btn-close btn-close-dark"  data-bs-dismiss="alert" aria-label="Close"> </button></div>').show();
+          } else {
+            $('#alert').html('<br><div class="alert alert-primary text-black alert-dismissible fade show" role="alert">' + response.errors + '<button type="button" class="btn-close btn-close-dark"  data-bs-dismiss="alert" aria-label="Close"> </button></div>').show();
+          }
+        }
+      });
+      } else { if (create_update=='ship_create') {
+                    $.ajax({
+                    url: '{% url "update_user_info" "ship_create" %}',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                        //    $('#shipping-form').hide();
+                            $('#alert').html('<br><div class="alert alert-primary text-black alert-dismissible fade show" role="alert"> \
+                            <strong>New Shipping Info Created!!  </strong> \
+                            <button type="button" class="btn-close btn-close-dark"  data-bs-dismiss="alert" aria-label="Close"> </button></div>').show();
+                        } else {
+                        $('#alert').html('<br><div class="alert alert-primary text-black alert-dismissible fade show" role="alert">' + response.errors + '<button type="button" class="btn-close btn-close-dark"  data-bs-dismiss="alert" aria-label="Close"> </button></div>').show();
+                        }
+                    }
+                    });
+               }
+               else { if (create_update=='ship_delete') {
+                        $.ajax({
+                            url: '{% url "update_user_info" "ship_delete" %}',
+                            type: 'POST',
+                            data: $(this).serialize(),
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response.success) {
+                                //    $('#shipping-form').hide();
+                                    $('#alert').html('<br><div class="alert alert-primary text-black alert-dismissible fade show" role="alert"> \
+                                    <strong>Your Shipment Info Has Been deleted!! </strong> \
+                                    <button type="button" class="btn-close btn-close-dark"  data-bs-dismiss="alert" aria-label="Close"> </button></div>').show();
+                                } else {
+                                     $('#alert').html('<br><div class="alert alert-primary text-black alert-dismissible fade show" role="alert">' + response.errors + '<button type="button" class="btn-close btn-close-dark"  data-bs-dismiss="alert" aria-label="Close"> </button></div>').show();
+                                }
+                            }
+                        });
+                      }
+               }
+      }
+      });
+  });
+
+document.querySelector('button[type="reset"]').addEventListener('click', function (e) {
+  e.preventDefault();
+  console.log('clear')
+  this.parentElement.reset();
+  this.parentElement.submit();
+})
+
+</script>
+{% endblock %}
+

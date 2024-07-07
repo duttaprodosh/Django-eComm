@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% extends 'authentication/cartauth_base.html' %}
+
+{% block title %} Orders {% endblock title %}
+
+{% block content %}
+{% load static %}
+<link href="{% static 'assets/css/login_styles.css' %}" rel="stylesheet" />
+<style>
+    .container1 {
+  width:800px
+  border: 0 solid rgba(0,0,0,.125);
+  border-radius: 1rem;
+  border: solid white 1px;
+}
+
+</style>
+<!-- Header-->
+
+
+        <div class="container1">
+        	<div class="row">
+        		<center>
+        			<div class="col-13">
+        				<br/><br/>
+<div class="card">
+  <div class="card-header">
+    <storng>
+    Order No :-&nbsp;&nbsp;{{ order.order_id}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     - Rs.{{order.amount}}
+    </storng>
+  </div>
+  <div class="card-body" >
+    <storng>
+    User :
+      {% if item.user.id == None %}
+        <td>Guest User</td>
+      {% else %}
+        <td>{{item.user.username}}</td>
+      {% endif %}
+      <br>
+    Email: {{ order.email}}<br/>
+    {% if order.date_shipped %}
+      Date Shipped: {{ order.date_shipped}}
+    {% else %}
+     Date Ordered: {{ order.date_ordered}}
+    {% endif %}
+    <br/><br/>
+    Shipment Name : {{ order.name }}<br/>
+    <pre>{{ order.address1 }},{{ order.address2 }},{{ order.city }},{{ order.state }},{{ order.zip_code }}
+    </pre>
+    {% for item in items %}
+      <strong>{{ item.product.product_name }} - Quantity : {{ item.quantity }} - Rs.{{ item.price }}  - Total Rs.{{item.linetotal}}</strong><br/><br>
+
+    {% endfor %}
+    <br/><br/>
+    {% if not order.shipped %}
+    <form method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="shipping_status" value="true">
+      <button type="Submit" class="btn btn-success">Mark As Shipped</button>
+    </form>
+
+    {% else %}
+    <form method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="shipping_status" value="false">
+      <button type="Submit" class="btn btn-danger">Mark As Not Shipped</button>
+    </form>
+
+    {% endif %}
+    </storng>
+  </div>
+</div>
+<br/>
+
+<br/><br/>
+        			</div>
+        		</center>
+        	</div>
+        </div>
+
+{% endblock %}

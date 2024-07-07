@@ -1,0 +1,414 @@
+{% extends 'authentication/cartauth_base.html' %}
+
+{% block title %} Cart Summary{% endblock title %}
+
+{% block content %}
+{% load static %}
+<link href="{% static 'assets/css/login_styles.css' %}" rel="stylesheet" />
+
+<style>
+label {display:block; width:280px; height:1px; text-align:right; vertical-align:center;}
+.container1 {
+  width:800px;
+  max-width:1000px;
+  height : 500px;
+  max-height : 900px;
+  border: 0 solid rgba(0,0,0,.125);
+  border-radius: 1rem;
+  border: solid white 1px;
+  overflow-y:scroll;
+}
+
+.container2 {
+  width:1000px;
+  max-width:1500px;
+  height : 700px;
+  max-height : 900px;
+  border: 0 solid rgba(0,0,0,.125);
+  border-radius: 1rem;
+  border: solid white 1px;
+  overflow-y:scroll;
+}
+
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+$(document).on("click", ".open-incident", function (e) {
+    e.preventDefault();
+    console.log('Checkout')
+    var $popup = $("#popup");
+    var popup_url = $(this).data("popup-url");
+    $popup.modal("show");
+$("#myBtn1").click(function(){
+    $("#popup").modal("hide");
+
+  });
+$("#myBtn2").click(function(){
+    $("#popup").modal("hide");
+    document.getElementById('div_id1').style.display="block";
+    document.getElementById('div_id2').style.display="block";
+  });
+$("#popup").on('hide.bs.modal', function(){
+    alert('The Checkout Window is about to be closed. Your Shipping Address as Inputted will be updated as exists in the Database');
+  });
+
+//    $(".modal-body", $popup).load(popup_url, function () {
+        $popup.modal("show");
+//        });
+//        $popup.modal("show");
+     });
+
+$(document).ready(function () {
+//  $('.open-incident')[0].click();
+  document.getElementById('div_id1').style.display="none";
+  document.getElementById('div_id2').style.display="none";
+});
+
+
+
+</script>
+
+        <!-- Header-->
+<div class="container1" >
+    <div class="sign-up-htm"><h3 class="display-7 fw-bolder">Your Shopping Cart</h3>
+
+        <div class="container-fluid1">
+        {% if cart_products %}
+        	{% for product in cart_products %}
+
+<div class="card mb-1">
+  <div class="row g-0">
+    <div class="col-md-5">
+      <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-7">
+      <div class="card-body">
+        <center>
+        <h5 class="card-title">{{ product.product_name }}</h5>
+
+        <p class="card-text justified">{{ product.desc }}</p>
+
+        {% if product.is_sale %}
+        <div class="d-flex justify-content-center small text-warning mb-2">
+                <div class="bi-star-fill"></div>
+                &nbsp;&nbsp;Sale!&nbsp;&nbsp;
+                <div class="bi-star-fill"></div>
+                </div>
+
+                <!-- Product price-->
+                <strike>
+                    <img src="../static/assets/Rupee_Sign.ico" width="20" height="18">{{ product.price }}
+                </strike>
+                &nbsp;{{ product.sale_price }}
+
+        {% else %}
+            <img src="../static/assets/Rupee_Sign.ico" width="20" height="18">{{ product.price }}
+
+        {% endif %}
+            <br/><br>
+        <div class="row justify-content-center">
+            <div class="col-md-3 p-0 mt-1" style="text-align:right;">Quantity :</div>
+                <div class="col-md-3" >
+                <select class="form-select form-select-sm" id="select{{product.product_id}}">
+
+            {% for key, value in quantities.items %}
+                {% if key == product.product_id|slugify %}
+            <option selected>{{ value }}</option>
+                {% endif %}
+            {% endfor %}
+
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="2">6</option>
+                  <option value="3">7</option>
+                  <option value="4">8</option>
+                  <option value="5">9</option>
+                  <option value="5">10</option>
+                </select>
+                </div>
+            </div>
+            <br/>
+            Item Wise Total :
+                {% for key, value in prod_totals.items %}
+                    {% if key == product.product_id|slugify %}
+                       <img src="../static/assets/Rupee_Sign.ico" width="20" height="18"> {{ value }}
+                    {% endif %}
+                {% endfor %}
+
+             <br/> <br/>
+        <a href="{% url 'index' %}#portfolio" class="btn btn-secondary">Home</a>
+        <button type="button" data-index="{{product.product_id}}" class="btn btn-primary update-cart">Update</button>
+        <button type="button" data-index="{{product.product_id}}" class="btn btn-danger delete-product">Remove</button>
+
+         </center>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+        	{% endfor %}
+
+                <div class="card mb-1">
+            <h5>Total : <img src="../static/assets/Rupee_Sign.ico" width="20" height="24">{{ totals }} </h5>
+                    </div>
+
+            <a href="{% url 'index'%}#portfolio" class="btn btn-secondary">Home</a>
+            <a href="" class="open-incident btn btn-secondary" id="checkout" class="btn btn-success">Checkout</a>
+
+            <br/>
+        	{% else %}
+            <br> <br>
+            <div class="sign-up-htm"><h3> There's Nothing In Your Cart...</h3> </div>
+            <a href="{% url 'index' %}#portfolio" class="btn btn-secondary">Home</a>
+        	<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        {% endif %}
+    	</div>
+    </div>
+
+</div>
+
+<div id="popup" class="modal fade" tabindex="-1" role="dialog">
+<div class="container2 px-2 px-lg-5 mt-2 offset-md-0">
+<div class="modal-dialog" style="width:900px; max-width:1000px;" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-black"><strong>Checkout Your Cart - Total Cart Amount : Rs.&nbsp;{{ totals }} </strong></h5>
+          <form href="#"></form>
+        <button id="myBtn1" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+          </form>
+      </div>
+      <div class="modal-body">
+
+        <div class="sign-up-htm">
+
+           <div class="col my-4 text-black">
+               <strong><h4>Enter Shipment Address & Other Details:</h4></strong>
+               {% for product in cart_products %}
+               Product Name : &nbsp;&nbsp;{{ product.product_name }} &nbsp;&nbsp;&nbsp;
+               {% for key, value in quantities.items %}
+                {% if key == product.product_id|slugify %}
+            Quantity : &nbsp;&nbsp;{{ value }}&nbsp;&nbsp;&nbsp;
+                {% endif %}
+            {% endfor %}
+
+            Item Wise Total :&nbsp;&nbsp;&nbsp;
+                {% for key, value in prod_totals.items %}
+                    {% if key == product.product_id|slugify %}
+                        {{ value }}<br>
+                    {% endif %}
+                {% endfor %}
+               {% endfor %}
+               <br>
+               <h5><strong>Total : Rs.&nbsp;{{ totals }} </strong></h5>
+
+                {% if page_obj != 'No' %}
+               {% for shipment in page_obj %}
+               <form method="post" action="{% url 'checkout' %}">{% csrf_token %}
+                   <input type="hidden" name="itemsJson" id="itemsJson">
+
+                   <input type="hidden" id="amt" name="amt">
+                    <input type="hidden" class="text" id="shipping_id" name="shipping_id" placeholder="Name" size="30" value="{{shipment.shipping_id}}" required>
+                       <div class="group text-info text-danger">
+                           <label for="name">Name</label>
+                           <input type="text" class="text" id="name" name="name" placeholder="Name" size="30" value="{{shipment.shipping_full_name}}" required>
+                       </div>
+
+                       <div class="group text-info text-danger">
+                           <label for="email">Email</label>
+                           <input type="email" class="text" id="email" name="email" placeholder="Email" value="{{shipment.shipping_email}}" size="30" required>
+                       </div>
+
+                   <div class="group text-info text-danger">
+                       <label for="address1">Address</label>
+                       <input type="text" class="text" id="address1" name="address1" placeholder="Shipment Address - 1" value="{{shipment.shipping_address1}}" size="30" required>
+                   </div>
+                   <div class="group text-info text-danger">
+                       <label for="address2">Address 2</label>
+                       <input type="text" class="text" id="address2" name="address2" placeholder="Shipment Address - 2" value="{{shipment.shipping_address2}}" size="30">
+                   </div>
+
+                   <div class="group text-info text-danger">
+                           <label for="City">City</label>
+                           <input type="text" class="text" id="city" name="city" value="{{shipment.shipping_city}}"size="30" required>
+                   </div>
+                   <div class="group text-info text-danger">
+                           <label for="State">State</label>
+                           <input type="text" class="text" id="state" name="state"  placeholder="Enter State" value="{{shipment.shipping_state}}" size="30" required>
+                   </div>
+
+                    <div class="group text-info text-danger">
+                           <label for="Zip_code">Pin Code</label>
+                           <input type="text" class="text" id="zip_code" name="zip_code" value="{{shipment.shipping_zipcode}}" size="30" required>
+                    </div>
+                   <div class="group text-info text-danger">
+                       <label for="phone">Phone Number</label>
+                       <input type="text" class="text" id="phone" name="phone" value="{{shipment.shipping_phone}}" size="30" required>
+                   </div>
+                   <div class="group text-info text-danger">
+                       <label for="country">Country</label>
+                       <input type="text" class="text" id="country" name="country" value="{{shipment.shipping_country}}" size="30" required>
+                   </div>
+                   <br>
+
+
+                   <button id="btn" type="submit" class="btn btn-primary btn-sm btn-block col-md-4">Place Order</button>
+
+               </form>
+
+               {% endfor %}
+               {% else %}
+               <br><br><br>
+                    <div class="group text-info text-danger">
+                        <p id="blink"> <strong> Alert : Please Signup & Login as User.</strong></p>
+                        <strong>YOU MUST Sign Up as a User to place an Order. Please Click 'SignUp' in the Top 'SignIn' Menu...</strong>
+                    </div>
+               <br><br><br>
+               {% endif %}
+           </div>
+             <script type="text/javascript">
+                var blink =  document.getElementById('blink');
+
+                setInterval(function () {
+                blink.style.opacity =
+                (blink.style.opacity == 0 ? 1 : 0);
+                }, 1000);
+            </script>
+
+            {% if page_obj != 'No' %}
+            <nav>
+<ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a id="first" class="page-link" href="?page=1">&laquo; first</a>
+            <script>
+            $(document).ready(function () { $('.open-incident')[0].click();});
+            </script>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a>
+        </li>
+    {% endif %}
+
+    <li class="page-item active">
+        <a  class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</a>
+    </li>
+
+    {% if page_obj.has_next %}
+    <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+        <script>
+            $(document).ready(function () { $('.open-incident')[0].click();});
+         </script>
+    </li>
+    <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+    </li>
+    {% endif %}
+</ul>
+</nav>
+    {% endif %}
+<!--
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1" class="btn btn-primary">&nbsp;<strong>&nbsp;&nbsp;&nbsp;&laquo;  First</strong></a>
+                        <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-primary"><strong>Previous</strong></a>
+                    {% endif %}
+
+                    <span class="current text-warning"><strong>
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        </strong>
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}" class="btn btn-primary"><strong>Next</strong></a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-primary"><strong>Last</strong> &raquo;</a>
+                    {% endif %}
+                </span>
+                <br>
+            </div> -->
+        </div>
+       <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal" id="myBtn2">Close
+        </button>
+       </div>
+      </div>
+    </div>
+</div>
+</div>
+
+
+<script>
+
+// Update Cart
+$(document).on('click', '.update-cart', function(e){
+    e.preventDefault();
+    // grab the product id
+    var productid = $(this).data('index');
+
+    $.ajax({
+    type: 'POST',
+    url: '{% url 'cart_update' %}',
+    data: {
+      product_id: $(this).data('index'),
+      product_qty: $('#select' + productid + ' option:selected').text(),
+      csrfmiddlewaretoken: '{{ csrf_token }}',
+      action: 'post'
+    },
+    success: function(json){
+        //console.log(json)
+        //document.getElementById("cart_quantity").textContent = json.qty
+        location.reload();
+    },
+
+    error: function(xhr, errmsg, err){
+
+    }
+
+
+    });
+
+})
+
+// Delete Item From Cart
+$(document).on('click', '.delete-product', function(e){
+    e.preventDefault();
+    // grab the product id
+    //var productid = $(this).data('index');
+
+    $.ajax({
+    type: 'POST',
+    url: '{% url 'cart_delete' %}',
+    data: {
+      product_id: $(this).data('index'),
+      csrfmiddlewaretoken: '{{ csrf_token }}',
+      action: 'post'
+    },
+    success: function(json){
+        //console.log(json)
+        //document.getElementById("cart_quantity").textContent = json.qty
+        location.reload();
+    },
+
+    error: function(xhr, errmsg, err){
+
+    }
+
+
+    });
+
+})
+
+</script>
+
+
+{% endblock %}

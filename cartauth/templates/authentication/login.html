@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% extends 'authentication/cartauth_base.html' %}
+
+{% block title %} SignUp {% endblock title %}
+
+{% block content %}
+{% load static %}
+<link href="{% static 'assets/css/login_styles.css' %}" rel="stylesheet" />
+<style>
+    .container1 {
+  width:800px
+  border: 0 solid rgba(0,0,0,.125);
+  border-radius: 1rem;
+  border: solid white 1px;
+}
+
+    .container2 {
+  width:800px
+  min-height : 1000px
+}
+</style>
+  <div class="container1" >
+    <div class="sign-up-htm"><h3> Log In</h3>
+				<form method="POST" action="{% url 'login' %}">
+                     {% csrf_token %}
+
+				<div class="group text-info">
+					<label for="username" class="label"><strong>Username</strong></label>
+					<input id="username" name="username" type="text" class="input" placeholder="User Name" required>
+				</div> <br>
+				<div class="group text-info">
+					<label for="password" class="label">Password</label>
+					<input id="password" name="password" type="password" class="input" data-type="password" placeholder="Password" required>
+				</div><br>
+				<div class="group text-info" >
+					<input type="submit" class="button text-info bg-dark" value="Log In">
+				</div>
+			</form>
+			<div class="hr" ><br>
+				<a type="submit" class="text-info" href="{% url 'forget_password' %}"  value="forget_password">&nbsp;&nbsp; Forgot Your Password ? Reset the Password.&nbsp;&nbsp;</a>
+			</div>
+	</div>
+  </div>
+<!-- Header-->
+{% endblock %}
+
+</html>

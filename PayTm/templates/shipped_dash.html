@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+{% extends 'authentication/cartauth_base.html' %}
+{% block title %}
+Shipped-Orders
+{% endblock title %}
+{% block content %}
+{% load static %}
+
+<style>
+    .container1 {
+  width:800px
+  border: 0 solid rgba(0,0,0,.125);
+  border-radius: 1rem;
+  border: solid white 1px;
+}
+
+</style>
+<!-- Header-->
+
+
+        <div class="container1 text-dark bg-light mt-2"><h4><strong>Shipped Items</strong></h4>
+        	<div class="row">
+        		<center>
+        			<div class="col-15">
+        				<br>
+
+<table class="table table-striped table-hover table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">Order</th>
+      <th scope="col">Invoice No.</th>
+      <th scope="col">Price</th>
+      <th scope="col">User Name</th>
+      <th scope="col">Customer Name</th>
+      <th scope="col">Customer Email</th>
+      <th scope="col">Date Shipped</th>
+      <th scope="col">Shipped</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in orders %}
+    <tr>
+      <strong>
+      <td><a href="{% url 'payment_orders' item.order_id %}">{{ item.order_id }}</a></td>
+      <td>{{ item.invoice_no}}</td>
+      <td>Rs.{{ item.amount }}
+        {% if item.user.id == None %}
+        <td>Guest User</td>
+        {% else %}
+        <td>{{item.user.username}}</td>
+        {% endif %}
+      <td>{{ item.name }}</td>
+      <td>{{ item.email }}</td>
+      <td>{{ item.date_shipped }}</td>
+       <td>
+        <form method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="shipping_status" value="false">
+          <input type="hidden" name="num" value={{item.order_id}}>
+          <button type="Submit" class="btn btn-danger btn-sm">Mark UnShipped</button>
+        </form>
+      </td>
+        </strong>
+    </tr>
+    {% endfor %}
+
+
+  </tbody>
+    <a type="Submit" href="{% url 'index' %}" class="btn btn-outline-primary btn-sm">Home</a>
+</table>
+
+
+<br/><br/>
+        			</div>
+        		</center>
+        	</div>
+        </div>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'authentication/cartauth_base.html' %}
+
+{% block title %} SignUp {% endblock title %}
+
+{% block content %}
+{% load static %}
+<link href="{% static 'assets/css/login_styles.css' %}" rel="stylesheet" />
+<style>
+    .container1 {
+  width:800px
+}
+
+    .container2 {
+  width:800px
+  min-height : 1000px
+}
+</style>
+<script>
+$(document).on("click", ".open-incident", function (e) {
+    e.preventDefault();
+    var $popup = $("#popup");
+    var popup_url = $(this).data("popup-url");
+    $popup.modal("show");
+$("#myBtn1").click(function(){
+    $("#popup").modal("hide");
+
+  });
+$("#myBtn2").click(function(){
+    $("#popup").modal("hide");
+    document.getElementById('div_id1').style.display="block";
+    document.getElementById('div_id2').style.display="block";
+  });
+$("#popup").on('hide.bs.modal', function(){
+    alert('The Login Modal Window is about to be closed.');
+  });
+
+//    $(".modal-body", $popup).load(popup_url, function () {
+        $popup.modal("show");
+//        });
+//        $popup.modal("show");
+     });
+
+$(document).ready(function () {
+  $('.open-incident')[0].click();
+  document.getElementById('div_id1').style.display="none";
+  document.getElementById('div_id2').style.display="none";
+});
+
+</script>
+
+
+<!-- Header-->
+
+
+<div id="div_id2">
+
+    <a  class="open-incident" href="" data-popup-url=""> <h4><strong>Click to Login...</strong></h4></a>
+
+</div>
+
+<div id="popup" class="modal fade" tabindex="-1" role="dialog">
+<div class="container2 px-2 px-lg-5 mt-2 offset-md-0">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Login Or Register as New User(SignUp)</h5>
+          <form href="{% url 'index' %}"></form>
+        <button id="myBtn1" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+          </form>
+      </div>
+      <div class="modal-body">
+              {%  include 'authentication/modalsignup.html'%}
+      </div>
+       <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal" id="myBtn2">Close
+        </button>
+       </div>
+      </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+</html>

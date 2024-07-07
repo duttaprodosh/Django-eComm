@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+{% extends 'authentication/cartauth_base.html' %}
+{% block title %}
+Check Out
+{% endblock title %}
+{% block content %}
+{% load static %}
+<link href="{% static 'assets/css/login_styles.css' %}" rel="stylesheet" />
+<style>
+label {display:block; width:200px; height:0px; text-align:right; vertical-align:center;}
+.container1 {
+  width:800px;
+  max-width:1000px;
+  height : 500px;
+  max-height : 900px;
+  border: 0 solid rgba(0,0,0,.125);
+  border-radius: 1rem;
+  border: solid white 1px;
+  overflow-y:scroll;
+}
+
+
+</style>
+
+<!-- ======= Portfolio Section ======= -->
+<div class="container1" >
+    <div class="sign-up-htm"><h3 class="display-7 fw-bolder">Checkout Your Cart</h3>
+
+           <div class="col my-4">
+               <h2>Enter Address & Other Details:</h2>
+               <form method="post" action="{% url 'checkout' %}">{% csrf_token %}
+                   <input type="hidden" name="itemsJson" id="itemsJson">
+
+                   <input type="hidden" id="amt" name="amt">
+
+                       <div class="group text-info">
+                           <label for="name">Name</label>
+                           <input type="text" class="text" id="name" name="name" placeholder="Name" size="40" value="{{user.username}}" required>
+                       </div>
+                       <div class="group text-info">
+                           <label for="email">Email</label>
+                           <input type="email" class="text" id="email" name="email" placeholder="Email" value="{{user.email}}" size="40" required>
+                       </div>
+
+                   <div class="group text-info">
+                       <label for="address1">Address</label>
+                       <input type="text" class="text" id="address1" name="address1" placeholder="Address Line 1 " size="40" required>
+                   </div>
+                   <div class="group text-info">
+                       <label for="address2" style="text-align:right;">Address line 2</label>
+                       <input type="text" class="text" id="address2" name="address2" placeholder="Address Line 2 " size="40" required>
+                   </div>
+
+                   <div class="group text-info">
+                           <label for="City">City</label>
+                           <input type="text" class="text" id="city" name="city" size="40" required>
+                   </div>
+                   <div class="group text-info">
+                           <label for="State">State</label>
+                           <input type="text" class="text" id="state" name="state"  placeholder="Enter State" size="40" required>
+                   </div>
+
+                    <div class="group text-info">
+                           <label for="Zip_code">Pin Code</label>
+                           <input type="number" class="text" id="zip_code" name="zip_code" size="40" required>
+                    </div>
+                   <div class="group text-info">
+                       <label for="phone">Phone Number</label>
+                       <input type="number" class="text" id="phone" name="phone" size="40" required>
+                   </div>
+                   <br>
+
+
+                   <button id="btn" type="submit" class="btn btn-success btn-sm btn-block col-md-4">Place Order</button>
+
+               </form>
+           </div>
+       </div>
+
+ <script src="https://code.jquery.com/jquery-3.3.1.js"
+ integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+ crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+
+
+{% endblock content %}

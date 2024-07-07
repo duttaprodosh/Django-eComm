@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+
+{% block content %}
+<head>
+<style>
+body{margin-top:20px;
+background-color:#eee;
+}
+
+.card {
+    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: 1rem;
+    border: solid black 1px;
+}
+</style>
+	<br><br><br>
+
+</head>
+
+<body id="container">
+<div class="container">
+<div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+
+
+					<div>
+						<form method="POST" action="{% url 'update_password'%}">
+						{% csrf_token %}
+
+							<br><br>
+					  <strong>Hi {{full_name}},<br>
+				      &nbsp;&nbsp;&nbsp;&nbsp;Please click in the reset password link to reset your password. </strong><br>
+						<input id="user" type="hidden" class="input" name="user" value="{{ user }}">
+						<input id="token" type="hidden" class="input" name="token" value="{{ token }}">
+						<input id="user_id" type="hidden" class="input" name="user_id" value="{{ user_id }}">
+							<div>
+							    Also input this OTP into the Reset Password Link Website. Your OTP is : {{otp}}
+							</div>
+							<button type="submit" class="btn btn-outline-primary">Please click in the reset password link to reset your password --> {{link }}</button>
+							<br><br><br><br>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<br>
+</body>
+ {% endblock %}

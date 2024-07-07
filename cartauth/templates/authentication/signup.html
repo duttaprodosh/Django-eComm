@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'authentication/cartauth_base.html' %}
+
+{% block title %} SignUp {% endblock title %}
+
+{% block content %}
+{% load static %}
+<link href="{% static 'assets/css/login_styles.css' %}" rel="stylesheet" />
+<style>
+
+.container1 {
+  width:400px;
+  max width : 500px;
+  border: 0 solid rgba(0,0,0,.125);
+  border-radius: 1rem;
+  border: solid white 1px;
+}
+
+.container2 {
+  width:800px
+  min-height : 1000px
+}
+</style>
+<script>
+
+</script>
+
+  <div class="container1" >
+    <div class="sign-up-htm"><h3> Sign Up</h3>
+				<form method="POST" action="{% url 'signup' %}">
+                     {% csrf_token %}
+
+				<div class="group text-info">
+					<label for="username" class="label"><strong>Username</strong></label>
+					<input id="username" name="username" type="text" class="input" placeholder="User Name" required>
+				</div> <br>
+				<div class="group text-info">
+					<label for="first_name" class="label">First Name</label>
+					<input id="first_name" name="first_name" type="text" class="input" placeholder="First Name" required>
+				</div><br>
+				<div class="group text-info">
+					<label for="last_name" class="label">Last Name</label>
+					<input id="last_name" name="last_name" type="text" class="input" placeholder="Last Name">
+				</div><br>
+				<div class="group text-info">
+					<label for="email" class="label">Email Address</label>
+					<input id="email" name="email" type="email" class="input" placeholder="Email" required>
+				</div><br>
+				<div class="group text-info">
+					<label for="password1" class="label">Password</label>
+					<input id="password1" name="password1" type="password" class="input" data-type="password" placeholder="Password" required>
+				</div><br>
+				<div class="group text-info">
+					<label for="password2" class="label">Repeat Password</label>
+					<input id="password2" name="password2" type="password" class="input" data-type="password" placeholder="Password" required>
+				</div>
+                <br>
+				<div class="group text-info" >
+					<button type="submit" class="btn btn-primary text-white" style="height:41px;width:100px" value="">Sign Up</button>
+					<button  href="{% url 'index' %}" class="btn btn4 btn-primary">
+       				Back
+     				</button>
+				</div>
+			</form>
+			<div class="hr mt-2 text-white" ><br>
+				<a type="submit" class="text-info" href="{% url 'login' %}"  value="Login"> Already Signed Up. Log In?</a>
+			</div>
+	</div>
+
+
+  </div>
+<!-- Header-->
+{% endblock %}
+
+</html>

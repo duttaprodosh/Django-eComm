@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+{% extends 'invoice_base.html' %}
+
+
+{% block content %}
+<head>
+<style>
+body{margin-top:20px;
+background-color:#eee;
+}
+
+.card {
+    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: 1rem;
+    border: solid black 1px;
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(65, 65, 65);
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+
+@media print {
+   @page {
+     margin-left: 0;
+     margin-right: 0;
+     margin-top: 0;
+     margin-bottom: 0;
+   }
+}
+
+
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+</head>
+<body id="container">
+<div class="container">
+<div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="invoice-title">
+                        <h4 class="float-end font-size-15">Invoice #{{invoice_no}} <span class="badge bg-success font-size-12 ms-2">Paid</span></h4>
+                        <div class="mb-4">
+                           <h2 class="mb-1 text-muted">django Shopping</h2>
+                        </div>
+                        <div class="text-muted">
+                            <p class="mb-1">1919 Fruitdale Avenue, San Jose, CA 95128</p>
+                            <p class="mb-1"><i class="uil uil-envelope-alt me-1"></i> djangoEcom_admin@abc.com</p>
+                            <p><i class="uil uil-phone me-1"></i> 234-568-9789</p>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="text-muted">
+                                <h5 class="font-size-16 mb-3">Billed To:</h5>
+                                <h5 class="font-size-15 mb-2">{{full_name}}</h5>
+                                <p class="mb-1">{{shipping_address}}</p>
+                                <p class="mb-1">{{email}}</p>
+                                <p>{{phone}}</p>
+                            </div>
+                        </div>
+                        <!-- end col -->
+                        <div class="col-sm-6">
+                            <div class="text-muted text-sm-end">
+                                <div>
+                                    <h5 class="font-size-15 mb-1">Invoice No:</h5>
+                                    <p>#{{invoice_no}}</p>
+                                </div>
+                                <div class="mt-4">
+                                    <h5 class="font-size-15 mb-1">Invoice Date (dd-mm-yyyy):</h5>
+                                    <p>{{invoice_date}}</p>
+                                </div>
+                                <div class="mt-4">
+                                    <h5 class="font-size-15 mb-1">Order No:</h5>
+                                    <p>#{{order_no}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+                    <div class="py-2">
+                        <h5 class="font-size-15">Order Summary - <span class="badge bg-success font-size-12 ms-2">&#x2714;Already Paid</span></h5>
+
+                        <div class="table-responsive">
+                            <table class="table align-middle table-nowrap table-centered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 70px;">No.</th>
+                                        <th>Item</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th class="text-end" style="width: 120px;">Total</th>
+                                    </tr>
+                                </thead><!-- end thead -->
+                                <tbody>
+                                    {% for product in cart_products %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>
+                                            <div>
+                                                <h5 class="text-truncate font-size-14 mb-1">{{ product.product_name }}</h5>
+                                                <p class="text-muted mb-0"> </p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                         {% if product.is_sale %}
+                                            Rs.{{ product.sale_price }}
+                                        {% else %}
+                                            Rs.{{ product.price }}
+                                        {% endif %}
+                                        </td>
+                                        <td>
+                                        {% for key, value in quantities.items %}
+                                        {% if key == product.product_id|slugify %}
+                                        {{ value }}
+                                        {% endif %}
+                                        {% endfor %}
+                                        </td>
+                                        <td class="text-end">
+                                         {% for key, value in prod_totals.items %}
+                                            {% if key == product.id|slugify %}
+                                                Rs.{{ value }}
+                                            {% endif %}
+                                        {% endfor %}
+                                         </td>
+                                    </tr>
+                                    <!-- end tr -->
+                                    {% endfor %}
+
+                                    <br/><br/>
+                                    <tr>
+                                        <th scope="row" colspan="4" class="text-end">Sub Total</th>
+                                        <td class="text-end">
+                                           <strong>Rs.{{ totals }}</strong>
+                                        </td>
+                                    </tr>
+                                    <!-- end tr -->
+                                    <tr>
+                                        <th scope="row" colspan="4" class="border-0 text-end">
+                                            Discount :</th>
+                                        <td class="border-0 text-end">- <strong>Rs.0.00</strong>
+                                        </td>
+                                    </tr>
+                                    <!-- end tr -->
+                                    <tr>
+                                        <th scope="row" colspan="4" class="border-0 text-end">
+                                            Shipping Charge :</th>
+                                        <td class="border-0 text-end">
+                                            <strong>Rs.0.00</strong>
+                                        </td>
+                                    </tr>
+                                    <!-- end tr -->
+                                    <tr>
+                                        <th scope="row" colspan="4" class="border-0 text-end">
+                                            Tax :</th>
+                                        <td class="border-0 text-end">
+                                          <strong>Rs.0.00</strong>
+                                        </td>
+                                    </tr>
+                                    <!-- end tr -->
+                                    <tr>
+                                        <th scope="row" colspan="4" class="border-0 text-end">Total : </th>
+                                        <td class="border-0 text-end"><h4 class="m-0 fw-semibold">Rs.{{totals}}</h4></td>
+                                    </tr>
+                                    <!-- end tr -->
+                                </tbody><!-- end tbody -->
+                            </table><!-- end table -->
+                        </div><!-- end table responsive -->
+                        <div class="d-print-none mt-4">
+                            <div class="float-end">
+                                <a href="javascript:window.print()" class="btn btn-success me-1"><i class="fa fa-print"> Save / Print</i></a>
+                                <a href="#" class="btn btn-outline-primary" id="print">Generate PDF</a>
+                                <a href="{% url 'index'%}" class="btn btn-primary w-md">Home</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end col -->
+    </div>
+</div>
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+    let printLink = document.getElementById("print");
+    let container = document.getElementById("container");
+
+    printLink.addEventListener("click", event => {
+        event.preventDefault();
+        printLink.style.display = "none";
+        window.print();
+    }, false);
+
+    container.addEventListener("click", event => {
+        printLink.style.display = "flex";
+    }, false);
+
+}, false);
+
+</script>
+</body>>
+{% endblock %}
