@@ -31,9 +31,10 @@ Home
                         Price: <span id="pricepr{{i.product_id}}">{{i.price}} </span>
                     </h6>
                     <span id="divpr{{i.product_id}}" class="divpr">
-                        <button id="pr{{i.product_id}}" class="btn btn-outline-primary cart btn-sm mt-0">
+<!--                        <button id="pr{{i.product_id}}" class="btn btn-outline-primary cart btn-sm mt-0">
                             Add To Cart
-                        </button>
+                        </button>   -->
+
                     </span>
                     <a href="{{i.image.url}}">
                         <button class="btn btn-primary btn-sm cart"> Image View </button>
@@ -54,7 +55,6 @@ Home
 document.querySelector('input').addEventListener('input', function(){
         document.querySelector('.box').scrollLeft = this.value;
 })
-
 
 </script>
 

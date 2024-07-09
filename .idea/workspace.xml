@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5a2876a9-a5e9-4b84-8e83-d679fe4d977b" name="Default Changelist" comment="" />
+    <list default="true" id="5a2876a9-a5e9-4b84-8e83-d679fe4d977b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/media/images/Nikon_Z5_Mirrorless_cEaUgnx_umZQxvF.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/boAt_Aorpods_141_ZrQ0DBJ_E1rau0K.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/smart_watch.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/smart_watch_uykOdOs.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecommerceapp/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ecommerceapp/templates/index.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,18 +35,18 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../django_eCommerce" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.language" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Cognizant\Pune_FebBatch\Python\Scripts\django\eComm\PayTm" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Cognizant\Pune_FebBatch\Python\Scripts\django\eComm\PayTm\templates" />
       <recent name="D:\Cognizant\Pune_FebBatch\Python\Scripts\django\eComm\ecommerceapp\templates" />
       <recent name="D:\Cognizant\Pune_FebBatch\Python\Scripts\django\eComm\cartauth\templates\authentication" />
       <recent name="D:\Cognizant\Pune_FebBatch\Python\Scripts\django\eComm\cartauth" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Cognizant\Pune_FebBatch\Python\Scripts\django\eComm\PayTm" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -56,15 +63,19 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="463" y="120" key="FileChooserDialogImpl" timestamp="1720267846514">
+    <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1720421853345">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="463" y="120" key="FileChooserDialogImpl/0.0.1366.720@0.0.1366.720" timestamp="1720267846514" />
+    <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.720@0.0.1366.720" timestamp="1720421853345" />
+    <state x="463" y="120" key="FileChooserDialogImpl" timestamp="1720358820232">
+      <screen x="0" y="0" width="1366" height="720" />
+    </state>
+    <state x="463" y="120" key="FileChooserDialogImpl/0.0.1366.720@0.0.1366.720" timestamp="1720358820232" />
     <state x="463" y="121" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1719991218184" />
-    <state x="186" y="6" key="SettingsEditor" timestamp="1720340992177">
+    <state x="186" y="6" key="SettingsEditor" timestamp="1720422068708">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="186" y="6" key="SettingsEditor/0.0.1366.720@0.0.1366.720" timestamp="1720340992177" />
+    <state x="186" y="6" key="SettingsEditor/0.0.1366.720@0.0.1366.720" timestamp="1720422068708" />
     <state x="178" y="181" width="1072" height="498" key="dock-window-1" timestamp="1718874198437">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
